@@ -66,7 +66,7 @@ public class RecipeLoader implements Runnable {
 
     @Override
     public final void run() {
-        final String recipesFolder = Loader.isModLoaded("dreamcraft") ? ASSETS_GTNH_RECIPE_PATH : ASSETS_RECIPE_PATH;
+        final String recipesFolder = Loader.isModLoaded("dreamcraft") ? ASSETS_RECIPE_PATH : ASSETS_RECIPE_PATH;
         boolean useResourceFallBack = true;
 
         if (this.config.isEnabled()) {
