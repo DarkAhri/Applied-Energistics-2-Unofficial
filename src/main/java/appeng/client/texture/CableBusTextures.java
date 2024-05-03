@@ -10,7 +10,10 @@
 
 package appeng.client.texture;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
@@ -214,6 +217,7 @@ public enum CableBusTextures {
 
     private final String name;
     public IIcon IIcon;
+    private static TextureAtlasSprite missingTexture = null;
 
     CableBusTextures(final String name) {
         this.name = name;
@@ -225,8 +229,24 @@ public enum CableBusTextures {
 
     @SideOnly(Side.CLIENT)
     public static IIcon getMissing() {
-        return ((TextureMap) Minecraft.getMinecraft().getTextureManager().getTexture(TextureMap.locationBlocksTexture))
-                .getAtlasSprite("missingno");
+        if (missingTexture == null) {
+            missingTexture = ((TextureMap) Minecraft.getMinecraft().getTextureManager()
+                    .getTexture(TextureMap.locationBlocksTexture)).getAtlasSprite("missingno");
+        }
+
+        return missingTexture;
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Nonnull
+    public static IIcon checkTexture(IIcon val) {
+        if (val == null) {
+            val = CableBusTextures.getMissing();
+        }
+
+        assert val != null;
+
+        return val;
     }
 
     public String getName() {
